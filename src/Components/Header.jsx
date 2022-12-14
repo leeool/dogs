@@ -6,8 +6,8 @@ import { ReactComponent as Dogs } from "../Assets/dogs.svg"
 import { UserContext } from "../UserContext"
 
 const Header = () => {
-  const global = React.useContext(UserContext)
-  console.log(global)
+  const { data, userLogout } = React.useContext(UserContext)
+  // console.log(data)
 
   return (
     <StyledHeader theme={theme}>
@@ -15,9 +15,16 @@ const Header = () => {
         <Link className="logo" to={"/"} aria-label="Dogs - Home">
           {<Dogs />}
         </Link>
-        <Link className="login" to={"/login"}>
-          Login/Criar
-        </Link>
+        {data ? (
+          <Link className="login" to={"/conta"}>
+            {data.nome}
+            <button onClick={userLogout}>sair</button>
+          </Link>
+        ) : (
+          <Link className="login" to={"/login"}>
+            Login/Criar
+          </Link>
+        )}
       </nav>
     </StyledHeader>
   )

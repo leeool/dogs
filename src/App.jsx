@@ -17,8 +17,8 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
+        <StyledGlobal />
         <UseStorage>
-          <StyledGlobal />
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />

@@ -1,5 +1,6 @@
 import React from "react"
-import { StyledLogin } from "../../Styles/StyledForm/StyledInput"
+import { StyledInput } from "../../Styles/StyledForm/StyledInput"
+import Error from "../Helpers/Error"
 
 const Input = ({
   id,
@@ -12,7 +13,7 @@ const Input = ({
   icon
 }) => {
   return (
-    <StyledLogin>
+    <StyledInput>
       <label htmlFor={id}>{label}</label>
       <div className="wrap">
         <input
@@ -24,8 +25,8 @@ const Input = ({
         />
         <button type="button">{icon}</button>
       </div>
-      {error && <p>{error}</p>}
-    </StyledLogin>
+      <Error erro={error} />
+    </StyledInput>
   )
 }
 

@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const StyledLogin = styled.div`
+export const StyledInput = styled.div`
   margin-bottom: 1.6rem;
   position: relative;
 

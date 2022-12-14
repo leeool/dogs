@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import usuario from "../Assets/usuario.svg"
 
 export const StyledHeader = styled.header`
   nav {
@@ -25,13 +26,13 @@ export const StyledHeader = styled.header`
     gap: 0 0.5rem;
   }
 
-  .login::after {
+  /* .login::after {
     content: "";
-    background: url("src/Assets/usuario.svg") no-repeat center center;
+    background: url("../Assets/usuario.svg") no-repeat center center;
     width: 1.5rem;
     height: 1.7rem;
     display: inline-block;
     position: relative;
     top: -1px;
-  }
+  } */
 `

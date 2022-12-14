@@ -1,58 +1,45 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import axios from "axios"
-import loginImage from "../../Assets/login.jpg"
 import Input from "../Form/Input"
 import { StyledLoginForm } from "../../Styles/StyledLogin/StyledLoginForm"
 import Button from "../Form/Button"
 import UseForm from "../../Hooks/UseForm"
 import UsePasswordToggle from "../../Hooks/UsePasswordToggle"
-import { TOKEN_POST, USER_GET } from "../../../api"
+import { UserContext } from "../../UserContext"
+import { motion } from "framer-motion"
+import Error from "../Helpers/Error"
+
+const animateLeft = {
+  hidden: { x: "-2rem", opacity: 0 },
+  visible: { x: "0", opacity: 1 },
+  transition: { type: "spring" }
+}
 
 const LoginForm = () => {
   const username = UseForm("")
   const password = UseForm("")
   const passwordToggle = UsePasswordToggle()
-  const [loadButton, setLoadButton] = React.useState(false)
-
-  React.useEffect(() => {
-    const token = localStorage.getItem("token")
-
-    if (token) getUser(token)
-  }, [])
-
-  const getUser = async () => {
-    const token = localStorage.getItem("token")
-
-    const { url, options } = USER_GET(token)
-
-    const response = await axios.get(url, options)
-    console.log(response.data)
-  }
+  const { userLogin, error, loading } = React.useContext(UserContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (username.validate() && password.validate()) {
-      const { url, data } = TOKEN_POST({
-        username: username.value,
-        password: password.value
-      })
-
-      const request = await axios.post(url, data)
-      localStorage.setItem("token", request.data.token)
-      getUser()
+      await userLogin({ username: username.value, password: password.value })
     }
   }
 
   return (
     <StyledLoginForm>
-      <div>
-        <img src={loginImage} alt="cachorro de touca amarela" />
-      </div>
-      <div className="login-content">
+      <motion.div
+        className="login-content"
+        variants={animateLeft}
+        initial="hidden"
+        animate="visible"
+        transition={{ type: "spring" }}
+      >
         <div className="login">
-          <h1>Login</h1>
+          <h1 className="main-title">Login</h1>
           <form onSubmit={handleSubmit}>
             <Input
               id={"user"}
@@ -66,20 +53,25 @@ const LoginForm = () => {
               {...password}
               {...passwordToggle}
             />
-            <Button content={"Entrar"} />
+            {loading ? (
+              <Button content={"Carregando..."} disabled />
+            ) : (
+              <Button content={"Entrar"} />
+            )}
+            <Error erro={error} />
           </form>
         </div>
-        <Link className="perdeu" to={"perdeu"}>
+        <Link className="perdeu" to={"/login/perdeu"}>
           Perdeu a senha?
         </Link>
         <div className="criar">
           <h2>Cadastre-se</h2>
           <p>Ainda não possui conta? Cadastre-se no site.</p>
-          <Link to={"criar"}>
+          <Link to={"/login/criar"}>
             <Button type={"button"} content={"Cadastro"} />
           </Link>
         </div>
-      </div>
+      </motion.div>
     </StyledLoginForm>
   )
 }

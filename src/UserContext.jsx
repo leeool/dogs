@@ -1,5 +1,5 @@
 import React from "react"
-import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from "./api"
+import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET, USER_POST } from "./api"
 import axios from "axios"
 import { useNavigate, redirect } from "react-router-dom"
 
@@ -11,6 +11,26 @@ export const UseStorage = ({ children }) => {
   const [error, setError] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   let navigate = useNavigate()
+
+  const userPost = async (username, email, password) => {
+    const { url, options } = USER_POST(username, email, password)
+
+    try {
+      setLoading(true)
+      setError(null)
+      const response = await fetch(url, options)
+      const json = await response.json()
+      if (!response.ok) throw new Error(json.message)
+
+      setLogin(true)
+      userLogin(username, password)
+      navigate("/conta")
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   React.useEffect(() => {
     const autoLogin = async () => {
@@ -28,7 +48,6 @@ export const UseStorage = ({ children }) => {
 
           userGet(token)
         } catch (err) {
-          console.log(err)
           userLogout()
         } finally {
           setLoading(false)
@@ -47,8 +66,8 @@ export const UseStorage = ({ children }) => {
     setLogin(true)
   }
 
-  const userLogin = async (data) => {
-    const { url, options } = TOKEN_POST(data)
+  const userLogin = async (username, password) => {
+    const { url, options } = TOKEN_POST(username, password)
 
     try {
       setLoading(true)
@@ -79,7 +98,7 @@ export const UseStorage = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userLogin, userLogout, data, error, login, loading }}
+      value={{ userLogin, userLogout, data, error, login, loading, userPost }}
     >
       {children}
     </UserContext.Provider>

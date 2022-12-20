@@ -33,10 +33,6 @@ const StyledGlobal = createGlobalStyle`
     font-size: 1rem;
   }
 
-  body{
-    padding-top: 6.4rem
-  }
-
   .form-container{
     max-width: 55rem;
     padding: 0 5rem;
@@ -62,6 +58,16 @@ const StyledGlobal = createGlobalStyle`
       bottom: 0.8rem;
       left: -0.5rem;
     }
+  }
+
+  .container{
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: auto 1rem;
+  }
+
+  .margin-top{
+    margin-top: 8.4rem;
   }
 
 `

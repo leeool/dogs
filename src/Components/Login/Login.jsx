@@ -8,6 +8,8 @@ import { UserContext } from "../../UserContext"
 import { Navigate } from "react-router-dom"
 import loginImage from "../../Assets/login.jpg"
 import { StyledLogin } from "../../Styles/StyledLogin/StyledLogin"
+import NotFound from "../NotFound"
+import LoginResetar from "./LoginResetar"
 
 const Login = () => {
   const { login } = React.useContext(UserContext)
@@ -23,6 +25,8 @@ const Login = () => {
           <Route path="/" element={<LoginForm />} />
           <Route path="/criar" element={<LoginCriar />} />
           <Route path="/perdeu" element={<LoginPerdeu />} />
+          <Route path="/resetar" element={<LoginResetar />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
     </StyledLogin>

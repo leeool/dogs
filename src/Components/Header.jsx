@@ -4,10 +4,10 @@ import { StyledHeader } from "../Styles/StyledHeader"
 import theme from "./Theme"
 import { ReactComponent as Dogs } from "../Assets/dogs.svg"
 import { UserContext } from "../UserContext"
+import { ReactComponent as Perfil } from "../Assets/usuario.svg"
 
 const Header = () => {
-  const { data, userLogout } = React.useContext(UserContext)
-  // console.log(data)
+  const { data } = React.useContext(UserContext)
 
   return (
     <StyledHeader theme={theme}>
@@ -18,7 +18,7 @@ const Header = () => {
         {data ? (
           <Link className="login" to={"/conta"}>
             {data.nome}
-            <button onClick={userLogout}>sair</button>
+            <Perfil />
           </Link>
         ) : (
           <Link className="login" to={"/login"}>

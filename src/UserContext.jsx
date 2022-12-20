@@ -1,7 +1,7 @@
 import React from "react"
-import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET, USER_POST } from "./api"
+import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from "./api"
 import axios from "axios"
-import { useNavigate, redirect } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const UserContext = React.createContext()
 
@@ -11,26 +11,6 @@ export const UseStorage = ({ children }) => {
   const [error, setError] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   let navigate = useNavigate()
-
-  const userPost = async (username, email, password) => {
-    const { url, options } = USER_POST(username, email, password)
-
-    try {
-      setLoading(true)
-      setError(null)
-      const response = await fetch(url, options)
-      const json = await response.json()
-      if (!response.ok) throw new Error(json.message)
-
-      setLogin(true)
-      userLogin(username, password)
-      navigate("/conta")
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   React.useEffect(() => {
     const autoLogin = async () => {
@@ -47,6 +27,7 @@ export const UseStorage = ({ children }) => {
           if (!response.ok) throw new Error("TOKEN INVÁLIDO")
 
           userGet(token)
+          setLogin(true)
         } catch (err) {
           userLogout()
         } finally {
@@ -79,6 +60,7 @@ export const UseStorage = ({ children }) => {
       localStorage.setItem("token", json.token)
       await userGet(json.token)
       navigate("/conta")
+      setLogin(true)
     } catch (err) {
       setError(err.message)
       setLogin(false)
@@ -98,7 +80,7 @@ export const UseStorage = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userLogin, userLogout, data, error, login, loading, userPost }}
+      value={{ userLogin, userLogout, data, error, login, loading }}
     >
       {children}
     </UserContext.Provider>

@@ -8,6 +8,7 @@ import UsePasswordToggle from "../../Hooks/UsePasswordToggle"
 import { UserContext } from "../../UserContext"
 import { motion } from "framer-motion"
 import Error from "../Helpers/Error"
+import Head from "../Helpers/Head"
 
 const animateLeft = {
   hidden: { x: "-2rem", opacity: 0 },
@@ -38,6 +39,7 @@ const LoginForm = () => {
         animate="visible"
         transition={{ type: "spring" }}
       >
+        <Head title="Faça login" />
         <div className="login">
           <h1 className="main-title">Login</h1>
           <form onSubmit={handleSubmit}>

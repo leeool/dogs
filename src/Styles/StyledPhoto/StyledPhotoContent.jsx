@@ -3,8 +3,7 @@ import styled from "styled-components"
 const StyledPhotoContent = styled.div`
   margin: auto;
   display: grid;
-  height: 54.8rem;
-  grid-template-columns: 54.8rem 32rem;
+  grid-template-columns: 57.8rem 32rem;
   background-color: #fff;
   border-radius: 0.8rem;
   overflow: hidden;
